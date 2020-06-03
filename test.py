@@ -23,7 +23,6 @@ import base64
 
 # Assuming urls.db is in your app root folder
 app = Flask(__name__)
-host = 'https://url-shortner3.herokuapp.com/'
 app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -65,6 +64,7 @@ class Post(db.Model):
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
+    host=request.scheme+'://'+request.host+'/'
     if request.method == 'POST':
         original_url = str_encode(request.form.get('url'))
         p = urlparse(original_url)
